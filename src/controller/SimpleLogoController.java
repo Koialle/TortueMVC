@@ -6,6 +6,8 @@ import java.awt.event.MouseListener;
 import javax.swing.SwingUtilities;
 import model.Feuille;
 import model.Tortue;
+import model.TortueBalle;
+import view.TortueBalleView;
 import model.TortueAmelioree;
 import view.FeuilleDessin;
 import view.SimpleLogoView;
@@ -144,6 +146,15 @@ public class SimpleLogoController implements MouseListener {
         
         t.addObserver(feuilleView);
         TortueView tView = new TortueAmelioreeView(t);
+        feuilleView.addTortue(tView);
+        setCourante(t);
+    }
+    
+    public void addNewTortueBalle()
+    {
+        TortueBalle t = new TortueBalle();
+        t.addObserver(feuilleView);        
+        TortueBalleView tView = new TortueBalleView(t);
         feuilleView.addTortue(tView);
         setCourante(t);
     }
