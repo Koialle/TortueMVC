@@ -5,14 +5,14 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.SwingUtilities;
 import model.Feuille;
-import model.Tortue;
+import model.TortueSimple;
 import model.TortueBalle;
-import view.TortueBalleView;
+import view.VueTortueBalle;
 import model.TortueAmelioree;
-import view.FeuilleDessin;
+import view.VueFeuille;
 import view.SimpleLogoView;
-import view.TortueAmelioreeView;
-import view.TortueView;
+import view.VueTortueAmelioree;
+import view.VueTortueSimple;
 
 /**
  * Class Main = Controlleur
@@ -21,10 +21,10 @@ import view.TortueView;
  */
 public class SimpleLogoController implements MouseListener {
 
-    private static SimpleLogoView window = null;
+    private static SimpleLogoView fenetre = null;
     private Feuille feuille = null;
-    private FeuilleDessin feuilleView = null;
-    private TortueView couranteView = null;
+    private VueFeuille vueFeuille = null;
+    private VueTortueSimple vueTortueCourante = null;
 
     /**
      * @param args
@@ -34,39 +34,38 @@ public class SimpleLogoController implements MouseListener {
             @Override
             public void run(){
                 SimpleLogoController controller = new SimpleLogoController();
-//                controller.addListeners();
             }
         });
     }
     
     public SimpleLogoController() {
         // Modèle
-        Tortue courante = new Tortue();
+        TortueSimple courante = new TortueSimple();
         feuille = new Feuille(courante);
 
         // Views
-        feuilleView = new FeuilleDessin();
-        feuilleView.addMouseListener(this);
-        couranteView = new TortueView(courante);
-        feuilleView.addTortue(couranteView);
+        vueFeuille = new VueFeuille();
+        vueFeuille.addMouseListener(this);
+        vueTortueCourante = new VueTortueSimple(courante);
+        vueFeuille.ajouterTortues(vueTortueCourante);
 
         // Add listeners
-        feuille.addObserver(feuilleView);
-        courante.addObserver(feuilleView);
+        feuille.addObserver(vueFeuille);
+        courante.addObserver(vueFeuille);
         
-        window = new SimpleLogoView(this, feuilleView);
+        fenetre = new SimpleLogoView(this, vueFeuille);
     }
 
-    public void resetCourante()
+    public void reinitialiserTortueCourante()
     {
         getCourante().reset();
     }
 
-    public void changeColor(int n) {
-        getCourante().setColor(n);
+    public void changerCouleur(int n) {
+        getCourante().setCouleur(n);
     }
     
-    public void changePosition(int x, int y) {
+    public void changerPosition(int x, int y) {
         getCourante().setPosition(x, y);
     }
     
@@ -85,85 +84,64 @@ public class SimpleLogoController implements MouseListener {
     public void gauche(int v) {
         getCourante().gauche(v);
     }
-    
-    public void leverCrayon() {
-        getCourante().leverCrayon();
-    }
-    
-    public void baisserCrayon() {
-        getCourante().baisserCrayon();
-    }
-    
-    /** les procedures Logo qui combine plusieurs commandes..*/
-    public void proc1() {
-        getCourante().carre();
-    }
 
-    public void proc2() {
-        getCourante().poly(60,8);
-    }
-
-    public void proc3() {
-        getCourante().spiral(50,40,6);
-    }
-
-    public void resetFeuille() {
-        feuille.reset();
+    public void reinitialiserFeuille() {
+        feuille.effacer();
     }
     
     // Temporary while no tortueController
-    protected Tortue getCourante()
+    protected TortueSimple getCourante()
     {
-        return feuille.getCourante();
+        return feuille.getTortueCourante();
     }
     
-    protected void setCourante(Tortue tortue)
+    protected void setCourante(TortueSimple tortue)
     {
-        feuille.addTortue(tortue);
-        feuille.setCourante(tortue);
+        feuille.ajouterTortue(tortue);
+        feuille.setTortueCourante(tortue);
     }
     
-    public void addNewTortueClassique()
+    public void ajouterTortueSimple()
     {
-        Tortue t = new Tortue();
-        t.addObserver(feuilleView);        
-        TortueView tView = new TortueView(t);
-        feuilleView.addTortue(tView);
+        TortueSimple t = new TortueSimple();
+        t.addObserver(vueFeuille);        
+        VueTortueSimple tView = new VueTortueSimple(t);
+        vueFeuille.ajouterTortues(tView);
         setCourante(t);
     }
     
-    public void addNewTortueAmelioree(String name)
+    public void ajouterTortueAmelioree(String nom)
     {
-        TortueAmelioree t = new TortueAmelioree(name);
+        TortueAmelioree t = new TortueAmelioree(nom);
 
-        for (Tortue tortue : feuille.getTortues()) {
-            t.addTortue(tortue);
+        for (TortueSimple tortue : feuille.getTortues()) {
+            t.ajouterTortue(tortue);
             
             if (tortue instanceof TortueAmelioree) {
-                ((TortueAmelioree)tortue).addTortue(t);
+                ((TortueAmelioree)tortue).ajouterTortue(t);
             }
         }
         
-        t.addObserver(feuilleView);
-        TortueView tView = new TortueAmelioreeView(t);
-        feuilleView.addTortue(tView);
+        t.addObserver(vueFeuille);
+        VueTortueSimple tView = new VueTortueAmelioree(t);
+        vueFeuille.ajouterTortues(tView);
         setCourante(t);
     }
     
-    public void addNewTortueBalle()
+    public void ajouterTortueBalle()
     {
         TortueBalle t = new TortueBalle();
-        t.addObserver(feuilleView);        
-        TortueBalleView tView = new TortueBalleView(t);
-        feuilleView.addTortue(tView);
+        t.addObserver(vueFeuille);        
+        VueTortueBalle tView = new VueTortueBalle(t);
+        vueFeuille.ajouterTortues(tView);
         setCourante(t);
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
         int x = e.getX(), y = e.getY();
-        Tortue tortue = feuille.getTortue(x, y);
-        feuille.setCourante(tortue);
+        TortueSimple tortue = feuille.getTortue(x, y);
+        feuille.setTortueCourante(tortue);
     }
 
     @Override

@@ -1,4 +1,3 @@
-
 package model;
 
 /**
@@ -6,14 +5,14 @@ package model;
  * @author Mélanie DUBREUIL
  * @author Ophélie EOUZAN
  */
-public class TortueBalle extends Tortue {
-    protected Tortue follow;
+public class TortueBalle extends TortueSimple {
+    protected TortueSimple tortueSuivie;
 
-    public Tortue getFollow() {
-        return follow;
+    public TortueSimple getTortueSuivie() {
+        return tortueSuivie;
     }
 
-    public void setFollow(Tortue follow) {
-        this.follow = follow;
+    public void setTortueSuivie(TortueSimple suivie) {
+        this.tortueSuivie = suivie;
     }
 }

@@ -11,31 +11,31 @@ import java.util.Observable;
  */
 public class Feuille extends Observable {
     
-    private ArrayList<Tortue> tortues; // la liste des tortues enregistrees
-    private Tortue courante;
+    private ArrayList<TortueSimple> tortues; // la liste des tortues enregistrees
+    private TortueSimple tortueCourante;
 	
     public Feuille() {
         tortues = new ArrayList();
-        courante = new Tortue();
-        addTortue(courante);
+        tortueCourante = new TortueSimple();
+        ajouterTortue(tortueCourante);
     }
     
-    public Feuille(Tortue courante) {
+    public Feuille(TortueSimple courante) {
         tortues = new ArrayList();
-        this.courante = courante;
-        addTortue(courante);
+        this.tortueCourante = courante;
+        ajouterTortue(courante);
     }
     
-    public Tortue getTortue(int x, int y){
-        for (Tortue t : tortues) {
+    public TortueSimple getTortue(int x, int y){
+        for (TortueSimple t : tortues) {
             if ((x - 15 < t.getX()) && (t.getX() < x + 15) && (y - 15 < t.getY()) &&(t.getY() < y + 15)){
                 return t;
             }
         }
-        return courante;
+        return tortueCourante;
     }
 
-    public void addTortue(Tortue o) {
+    public void ajouterTortue(TortueSimple o) {
         if (!tortues.contains(o)) {
             tortues.add(o);
             this.setChanged();
@@ -43,24 +43,21 @@ public class Feuille extends Observable {
         }
     }
 
-    public void reset() {
-//        for (Tortue t : tortues) {
-//            t.reset();
-//        }
+    public void effacer() {
         tortues.clear();
         this.setChanged();
         this.notifyObservers();
     }
 
-    public ArrayList<Tortue> getTortues() {
+    public ArrayList<TortueSimple> getTortues() {
         return tortues;
     }
 
-    public Tortue getCourante() {
-        return courante;
+    public TortueSimple getTortueCourante() {
+        return tortueCourante;
     }
 
-    public void setCourante(Tortue courante) {
-        this.courante = courante;
+    public void setTortueCourante(TortueSimple courante) {
+        this.tortueCourante = courante;
     }
 }
