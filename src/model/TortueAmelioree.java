@@ -50,8 +50,12 @@ public class TortueAmelioree extends TortueSimple {
     public void avancer(int dist) {
         super.avancer(dist);
         for (TortueSimple tortue : tortuesConnues) {
-            if (tortue instanceof TortueAmelioree && this.getDistanceEuclidienne(tortue) < 15) {
-                System.out.println("> " + nom + " : Salut " + ((TortueAmelioree)tortue).getNom());
+            if (getDistanceEuclidienne(tortue) < 15) {
+                if (tortue instanceof TortueAmelioree && this.getDistanceEuclidienne(tortue) < 15) {
+                    System.out.println(">> " + nom + ": Salut " + ((TortueAmelioree)tortue).getNom());
+                } else {
+                    System.out.println(">> " + nom + ": Bonjour Tortue!");
+                }
                 tortue.avancer(dist);
             }
         }
