@@ -77,15 +77,7 @@ public class SimpleLogoView extends JFrame implements ActionListener {
         this.controller = controller;
         this.feuille = feuille;
         
-        this.initialisationLogo();
-
-        this.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent arg0) {
-                super.windowClosing(arg0);
-                System.exit(0);
-            }
-        });
+        initialisationLogo();
     }
 
     public void initialisationLogo() {
@@ -161,6 +153,14 @@ public class SimpleLogoView extends JFrame implements ActionListener {
 
         pack();
         setVisible(true);
+        
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent arg0) {
+                super.windowClosing(arg0);
+                System.exit(0);
+            }
+        });
     }
 
     /** la gestion des actions des boutons

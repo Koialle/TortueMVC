@@ -21,6 +21,7 @@ public class VueTortueBalle extends VueTortueSimple {
 
         int radius = 5;
         TortueBalle t = (TortueBalle) tortue;
+        graphics.setColor(decoderCouleur(tortue.getCouleur()));
         graphics.fillOval(t.getX() - radius, t.getY() - radius, 2 * radius, 2 * radius);
     }
 }
