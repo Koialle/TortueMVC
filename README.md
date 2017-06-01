@@ -8,3 +8,4 @@ TP4 du module d'ISI3 consacré aux Design Patterns
 TODO : 
 * Corriger bug de changement de couleur pour les tortues balles
 * Pattern Frabrique pour la création des différentes Tortues
+* Tortues améliorées disent bonjour aux tortues normales aussi
