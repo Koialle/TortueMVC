@@ -99,17 +99,12 @@ public class SimpleLogoController implements MouseListener {
     {
         return feuille.getTortueCourante();
     }
-    
-    protected void setCourante(TortueSimple tortue)
-    {
-        feuille.ajouterTortue(tortue);
-        feuille.setTortueCourante(tortue);
-    }
-    
+
     public void ajouterTortue(TortueFactory factory)
     {
         TortueSimple tortue = factory.ajouterNouvelleTortue(this);
-        setCourante(tortue);
+        feuille.ajouterTortue(tortue);
+        feuille.setTortueCourante(tortue);
     }
 
     @Override
