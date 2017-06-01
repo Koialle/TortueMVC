@@ -2,6 +2,9 @@
 package view;
 
 import controller.SimpleLogoController;
+import factory.TortueAmelioreeFactory;
+import factory.TortueBalleFactory;
+import factory.TortueSimpleFactory;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Event;
@@ -55,6 +58,10 @@ public class SimpleLogoView extends JFrame implements ActionListener {
 
     public JTextField getChampDegree() {
         return champDegree;
+    }
+    
+    public String getTortueName() {
+        return champNom.getText();
     }
 
     public JComboBox getListeCouleurs() {
@@ -165,7 +172,6 @@ public class SimpleLogoView extends JFrame implements ActionListener {
 
         // actions des boutons du haut
         if (c.equals("Avancer")) {
-            System.out.println("command avancer");
             try {
                 int v = Integer.parseInt(champDegree.getText());
                 controller.avancer(v);
@@ -189,16 +195,16 @@ public class SimpleLogoView extends JFrame implements ActionListener {
         } else if (c.equals("Ajouter")) {
             int n = listeCouleurs.getSelectedIndex();
             int typeTortue = listeTortues.getSelectedIndex();
-            switch(typeTortue) {
-                case 0 : controller.ajouterTortueSimple();
+            switch (typeTortue) {
+                case 0 :
+                    controller.ajouterTortue(new TortueSimpleFactory());
                     break;
                 case 1 :
-                    controller.ajouterTortueAmelioree(champNom.getText());
+                    controller.ajouterTortue(new TortueAmelioreeFactory());
                     break;
                 case 2 : 
-                    controller.ajouterTortueBalle();
+                    controller.ajouterTortue(new TortueBalleFactory());
                     break;
-                default : controller.ajouterTortueSimple();               
                 
             }
             controller.changerCouleur(n);

@@ -1,17 +1,14 @@
 
 package controller;
 
+import factory.TortueFactory;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.SwingUtilities;
 import model.Feuille;
 import model.TortueSimple;
-import model.TortueBalle;
-import view.VueTortueBalle;
-import model.TortueAmelioree;
 import view.VueFeuille;
 import view.SimpleLogoView;
-import view.VueTortueAmelioree;
 import view.VueTortueSimple;
 
 /**
@@ -89,6 +86,14 @@ public class SimpleLogoController implements MouseListener {
         feuille.effacer();
     }
     
+    public SimpleLogoView getFenetre() {
+        return fenetre;
+    }
+    
+    public Feuille getFeuille() {
+        return feuille;
+    }
+    
     // Temporary while no tortueController
     protected TortueSimple getCourante()
     {
@@ -101,40 +106,10 @@ public class SimpleLogoController implements MouseListener {
         feuille.setTortueCourante(tortue);
     }
     
-    public void ajouterTortueSimple()
+    public void ajouterTortue(TortueFactory factory)
     {
-        TortueSimple t = new TortueSimple();
-        t.addObserver(vueFeuille);        
-        VueTortueSimple tView = new VueTortueSimple(t);
-        vueFeuille.ajouterTortues(tView);
-        setCourante(t);
-    }
-    
-    public void ajouterTortueAmelioree(String nom)
-    {
-        TortueAmelioree t = new TortueAmelioree(nom);
-
-        for (TortueSimple tortue : feuille.getTortues()) {
-            t.ajouterTortue(tortue);
-            
-            if (tortue instanceof TortueAmelioree) {
-                ((TortueAmelioree)tortue).ajouterTortue(t);
-            }
-        }
-        
-        t.addObserver(vueFeuille);
-        VueTortueSimple tView = new VueTortueAmelioree(t);
-        vueFeuille.ajouterTortues(tView);
-        setCourante(t);
-    }
-    
-    public void ajouterTortueBalle()
-    {
-        TortueBalle t = new TortueBalle();
-        t.addObserver(vueFeuille);        
-        VueTortueBalle tView = new VueTortueBalle(t);
-        vueFeuille.ajouterTortues(tView);
-        setCourante(t);
+        TortueSimple tortue = factory.ajouterNouvelleTortue(this);
+        setCourante(tortue);
     }
 
     @Override
