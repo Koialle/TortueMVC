@@ -5,6 +5,5 @@ TP4 du module d'ISI3 consacré aux Design Patterns
 * Gestion de plusieurs tortues
 * Nouvelles tortues : TortueAmelioree, TortueBalle
 
-TODO : 
-* Changement couleur TortueBalle
+TODO :
 * TortueAmelioree disent "Bonjour" aux TortueSimple
